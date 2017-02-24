@@ -16,6 +16,7 @@ module.exports = React.createClass({
 
   getDefaultProps() {
     return {
+      sideBySide: false,
       prevMonthIcon: 'ion-ios-arrow-left',
       nextMonthIcon: 'ion-ios-arrow-right',
       isValid: function(m) { return true; }
@@ -25,23 +26,24 @@ module.exports = React.createClass({
   render() {
     var tab = this.state.tab;
     var m = this.props.moment;
-    var props = blacklist(this.props, 'className', 'moment', 'prevMonthIcon', 'nextMonthIcon', 'onSave', 'isValid');
+    var props = blacklist(this.props, 'className', 'moment', 'prevMonthIcon', 'nextMonthIcon', 'onSave', 'isValid', 'sideBySide');
     props.className = cx('m-input-moment', this.props.className);
 
+    let sideBySide = this.props.sideBySide;
     return (
       <div {...props}>
-        <div className="options">
-          <button type="button" className={cx('fa fa-calendar im-btn', {'is-active': tab === 0})} onClick={this.handleClickTab.bind(null, 0)}>
+        <div className={cx('options', {'side-by-side': sideBySide})}>
+          <button type="button" className={cx('fa fa-calendar im-btn', {'is-active': !sideBySide && tab === 0})} onClick={this.handleClickTab.bind(null, 0)}>
             Date
           </button>
-          <button type="button" className={cx('fa fa-clock-o im-btn', {'is-active': tab === 1})} onClick={this.handleClickTab.bind(null, 1)}>
+          <button type="button" className={cx('fa fa-clock-o im-btn', {'is-active': !sideBySide && tab === 1})} onClick={this.handleClickTab.bind(null, 1)}>
             Time
           </button>
         </div>
 
-        <div className="tabs">
+        <div className={cx('tabs', {'side-by-side': sideBySide})}>
           <Calendar
-            className={cx('tab', {'is-active': tab === 0})}
+            className={cx('tab', {'is-active': tab === 0 || sideBySide})}
             moment={m}
             onChange={this.props.onChange}
             prevMonthIcon={this.props.prevMonthIcon}
@@ -49,7 +51,7 @@ module.exports = React.createClass({
             isValid={this.props.isValid}
           />
           <Time
-            className={cx('tab', {'is-active': tab === 1})}
+            className={cx('tab', {'is-active': tab === 1 || sideBySide})}
             moment={m}
             onChange={this.props.onChange}
           />
