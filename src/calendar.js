@@ -13,11 +13,19 @@ var Day = React.createClass({
     var w = this.props.w;
     var prevMonth = (w === 0 && i > 7);
     var nextMonth = (w >= 4 && i <= 14);
-    var props = blacklist(this.props, 'i', 'w', 'd', 'className');
+    var m = moment(this.props.m);
+    if(prevMonth) m.subtract(1, 'month');
+    if(nextMonth) m.add(1, 'month');
+    m.date(i);
+    var valid = this.props.isValid(m);
+
+    var props = blacklist(this.props, 'i', 'w', 'd', 'm', 'className', 'isValid');
     props.className = cx({
       'prev-month': prevMonth,
       'next-month': nextMonth,
-      'current-day': !prevMonth && !nextMonth && (i === this.props.d)
+      'current-day': !prevMonth && !nextMonth && (i === this.props.d),
+      'valid': valid,
+      'invalid': !valid
     });
 
     return <td {... props}>{i}</td>;
@@ -65,8 +73,9 @@ module.exports = React.createClass({
             {chunk(days, 7).map((row, w) => (
               <tr key={w}>
                 {row.map((i) => (
-                  <Day key={i} i={i} d={d} w={w}
-                    onClick={this.selectDate.bind(null, i, w)}
+                  <Day key={i} i={i} d={d} w={w} m={this.props.moment}
+                       isValid={this.props.isValid}
+                       onClick={this.selectDate.bind(null, i, w)}
                   />
                 ))}
               </tr>
@@ -80,13 +89,19 @@ module.exports = React.createClass({
   selectDate(i, w) {
     var prevMonth = (w === 0 && i > 7);
     var nextMonth = (w >= 4 && i <= 14);
-    var m = this.props.moment;
+    var test = moment(this.props.moment);
+    if (prevMonth) test.subtract(1, 'month');
+    if (nextMonth) test.add(1, 'month');
+    test.date(i);
+    if (this.props.isValid(test)) {
+      var m = this.props.moment;
 
-    m.date(i);
-    if(prevMonth) m.subtract(1, 'month');
-    if(nextMonth) m.add(1, 'month');
+      m.date(i);
+      if (prevMonth) m.subtract(1, 'month');
+      if (nextMonth) m.add(1, 'month');
 
-    this.props.onChange(m);
+      this.props.onChange(m);
+    }
   },
 
   prevMonth(e) {
