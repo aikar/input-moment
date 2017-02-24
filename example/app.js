@@ -34,6 +34,12 @@ var App = React.createClass({
           onChange={this.handleChange}
           onSave={this.handleSave}
         />
+        <InputMoment
+          sideBySide
+          moment={this.state.m}
+          onChange={this.handleChange}
+          onSave={this.handleSave}
+        />
         </form>
       </div>
     );
