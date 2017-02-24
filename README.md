@@ -7,9 +7,10 @@ The design is from https://dribbble.com/shots/1439965-Due-Date-and-Time-Picker.
 
 
 ## Changes in this version of input-moment
-I've added isValid support based on [https://github.com/wangzuo/input-moment/pull/17]
-I've also added a sideBySide boolean property to show the time picker beside the date picker
-I've also changed icons to use font-awesome instead of ion.
+ - Added isValid support based on [https://github.com/wangzuo/input-moment/pull/17]
+ - Added a sideBySide boolean property to show the time picker beside the date picker
+ - Changed icons to use font-awesome instead of ion.
+ - Updated lodash
 
 ### Installation
 ``` sh

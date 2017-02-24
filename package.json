@@ -15,7 +15,7 @@
   "github-pages-deploy": {
     "src": "example"
   },
-  "author": "Wang Zuo",
+  "author": "Aikar (base: Wang Zuo)",
   "license": "ISC",
   "peerDependencies": {
     "moment": "^2.10.6",
@@ -47,7 +47,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wangzuo/input-moment.git"
+    "url": "git+https://github.com/aikar/input-moment.git"
   },
   "keywords": [
     "react",
@@ -58,7 +58,7 @@
     "moment"
   ],
   "bugs": {
-    "url": "https://github.com/wangzuo/input-moment/issues"
+    "url": "https://github.com/aikar/input-moment/issues"
   },
-  "homepage": "https://github.com/wangzuo/input-moment#readme"
+  "homepage": "https://github.com/aikar/input-moment#readme"
 }
