@@ -17,8 +17,8 @@ module.exports = React.createClass({
   getDefaultProps() {
     return {
       sideBySide: false,
-      prevMonthIcon: 'ion-ios-arrow-left',
-      nextMonthIcon: 'ion-ios-arrow-right',
+      prevMonthIcon: 'fa fa-fw fa-chevron-left',
+      nextMonthIcon: 'fa fa-fw fa-chevron-right',
       isValid: function(m) { return true; }
     };
   },
