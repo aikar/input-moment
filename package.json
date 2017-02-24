@@ -41,8 +41,8 @@
   },
   "dependencies": {
     "blacklist": "^1.1.4",
-    "classnames": "^2.2.0",
-    "lodash": "^3.10.1",
+    "classnames": "^2.2.5",
+    "lodash": "^4.17.1",
     "react-input-slider": "^1.5.0"
   },
   "repository": {
