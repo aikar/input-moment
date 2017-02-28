@@ -5,15 +5,44 @@ var InputSlider = require('react-input-slider');
 module.exports = React.createClass({
   displayName: 'Time',
 
+  getInitialState() {
+    return {
+      am: this.props.moment.hour() < 12
+    };
+  },
+
+  toggleAM(am) {
+    if (this.state.am === am) {
+      return;
+    }
+    var m = this.props.moment;
+    if (am) {
+      m.add({hours: -12});
+    } else {
+      m.add({hours: 12});
+    }
+    this.state.am = am;
+    this.setState({am: am});
+    this.props.onChange(m);
+  },
   render() {
     var m = this.props.moment;
 
     return (
       <div className={cx('m-time', this.props.className)}>
         <div className="showtime">
-          <span className="time">{m.format('HH')}</span>
+          <span className="time">{m.format('hh')}</span>
           <span className="separater">:</span>
           <span className="time">{m.format('mm')}</span>
+          <span className="separater">:</span>
+          <span className={cx('ampm')}>
+            <span className={cx('am', {'active': this.state.am})}
+                  onClick={() => this.toggleAM(true)}
+            >AM</span>
+            <span className={cx('pm', {'active': !this.state.am})}
+                  onClick={() => this.toggleAM(false)}
+            >PM</span>
+          </span>
         </div>
 
         <div className="sliders">
@@ -21,8 +50,8 @@ module.exports = React.createClass({
           <InputSlider
             className="u-slider-time"
             xmin={0}
-            xmax={23}
-            x={m.hour()}
+            xmax={11}
+            x={m.hour() % 12}
             onChange={this.changeHours}
           />
           <div className="time-text">Minutes:</div>
@@ -40,7 +69,11 @@ module.exports = React.createClass({
 
   changeHours(pos) {
     var m = this.props.moment;
-    m.hours(parseInt(pos.x, 10));
+    let number = parseInt(pos.x, 10);
+    if (!this.state.am) {
+      number += 12;
+    }
+    m.hours(number);
     this.props.onChange(m);
   },
 

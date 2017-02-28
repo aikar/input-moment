@@ -12,7 +12,7 @@ var App = React.createClass({
 
   getInitialState() {
     return {
-      m: moment()
+      m: moment().add({hours: -13})
     };
   },
 
@@ -29,13 +29,7 @@ var App = React.createClass({
             readOnly
           />
         </div>
-          <div className="example">
-        <InputMoment
-          moment={this.state.m}
-          onChange={this.handleChange}
-          onSave={this.handleSave}
-        />
-          </div>
+
           <div className="example">
         <InputMoment
           sideBySide
@@ -43,6 +37,13 @@ var App = React.createClass({
           onChange={this.handleChange}
           onSave={this.handleSave}
         />
+          </div>
+          <div className="example">
+            <InputMoment
+              moment={this.state.m}
+              onChange={this.handleChange}
+              onSave={this.handleSave}
+            />
           </div>
         </form>
       </div>

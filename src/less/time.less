@@ -6,6 +6,7 @@
 
   .showtime {
     text-align: center;
+    margin-bottom: 20px;
   }
 
   .separater {
@@ -33,13 +34,32 @@
   }
 
   .time {
-    width: 65px;
-    height: 65px;
+    width: 64px;
+    height: 64px;
     display: inline-block;
     font-size: 38px;
-    line-height: 65px;
+    line-height: 64px;
     background-color: @color-blue;
     border-radius: 3px;
     text-align: center;
+  }
+  .ampm {
+    width: 64px;
+    height: 64px;
+    display: inline-block;
+    > span {
+      color: black;
+      display: block;
+      width: 64px;
+
+      height: 32px;
+      font-size: 18px;
+      line-height: 32px;
+    }
+    > .active {
+      color: white;
+      background-color: @color-blue;
+      border-radius: 3px;
+    }
   }
 }
