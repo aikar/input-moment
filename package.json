@@ -1,6 +1,6 @@
 {
   "name": "input-moment-ex",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "React datetime picker powered by momentjs - improvements by Aikar",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "deploy": "npm run build && github-pages-deploy",
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm dist/* && rm example/bundle*",
-    "prepublish": "rm -rf dist/ lib/; mkdir dist/; touch dist/.npmignore; npm run build"
+    "prepublish": "rm -rf dist/ lib/; mkdir dist/ lib/; touch dist/.npmignore lib/.npmignore; npm run build"
   },
   "github-pages-deploy": {
     "src": "example"
