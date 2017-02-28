@@ -32,9 +32,9 @@ module.exports = React.createClass({
       <div className={cx('m-time', this.props.className)}>
         <div className="showtime">
           <span className="time">{m.format('hh')}</span>
-          <span className="separater">:</span>
+          <span className="seperator">:</span>
           <span className="time">{m.format('mm')}</span>
-          <span className="separater">:</span>
+          <span className="seperator">:</span>
           <span className={cx('ampm')}>
             <span className={cx('am', {'active': this.state.am})}
                   onClick={() => this.toggleAM(true)}

@@ -4,7 +4,7 @@
   "description": "React datetime picker powered by momentjs - improvements by Aikar",
   "main": "index.js",
   "scripts": {
-    "start": "npm run build-js && webpack-dev-server -c --port=8888",
+    "start": "npm run build-js && webpack-dev-server -c --port=8888 --host=0.0.0.0",
     "build-js": "babel src --out-dir lib && webpack -p",
     "build-css": "lessc --clean-css src/less/input-moment.less dist/input-moment.css",
     "build": "npm run build-js && npm run build-css",

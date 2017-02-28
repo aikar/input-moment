@@ -1,65 +1,71 @@
 @import 'variables';
 
 .m-time {
-  color: @color-white;
-  padding-top: 50px;
+  display: block;
+  .showtime{
+    
+    display:flex;
+    justify-content: center;
+    margin-top:50px;
 
-  .showtime {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  .separater {
-    display: inline-block;
     font-size: 32px;
-    font-weight: bold;
-    color: @color-blue;
-    width: 32px;
-    height: 65px;
-    line-height: 65px;
-    text-align: center;
-  }
+    color: @color-white;
 
-  .time-text {
-    position: relative;
-    left: -10px;
-    font-size: 15px;
-    color: @color-blue;
-    margin-top: 7px;
-    margin-bottom: 10px;
-  }
-
-  .sliders {
-    padding: 0 10px;
-  }
-
-  .time {
-    width: 64px;
-    height: 64px;
-    display: inline-block;
-    font-size: 38px;
-    line-height: 64px;
-    background-color: @color-blue;
-    border-radius: 3px;
-    text-align: center;
-  }
-  .ampm {
-    width: 64px;
-    height: 64px;
-    display: inline-block;
-    > span {
-      color: black;
-      display: block;
+    > .time {
       width: 64px;
-
-      height: 32px;
-      font-size: 18px;
-      line-height: 32px;
-    }
-    > .active {
-      color: white;
+      padding:24px 14px;
+      text-align: center;
       background-color: @color-blue;
       border-radius: 3px;
     }
+
+    > .seperator {
+      padding:24px 7px;
+      color: @color-blue;
+    }
+
+    > .ampm {
+        display:flex;
+        flex-direction:column;
+        cursor: pointer;
+
+        > span {
+          
+          width: 64px;
+          padding:6px;
+          background-color: @color-white;
+          border-radius: 3px;
+
+          font-size: 18px;
+          color: @color-blue;
+          text-align: center;
+
+          &:first-child{
+            margin-bottom:2px;
+          }
+
+          &.active {
+            color: @color-white;
+            background-color: @color-blue;
+            border-radius: 3px;
+          }
+
+        }
+
+    }
+
   }
+
+  > .sliders {
+    
+    display: block;
+    margin-top:20px;
+
+    > .time-text {
+      text-align: left;
+      padding-top:10px;
+    }
+
+  }
+
 }
