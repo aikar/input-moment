@@ -29,17 +29,21 @@ var App = React.createClass({
             readOnly
           />
         </div>
+          <div className="example">
         <InputMoment
           moment={this.state.m}
           onChange={this.handleChange}
           onSave={this.handleSave}
         />
+          </div>
+          <div className="example">
         <InputMoment
           sideBySide
           moment={this.state.m}
           onChange={this.handleChange}
           onSave={this.handleSave}
         />
+          </div>
         </form>
       </div>
     );
