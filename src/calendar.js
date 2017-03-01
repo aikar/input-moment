@@ -48,7 +48,7 @@ module.exports = React.createClass({
       range(1, 42-d3-d2+1)
     );
 
-    var weeks = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    var weeks = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
 
     return (
       <div className={cx('m-calendar', this.props.className)}>

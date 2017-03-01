@@ -54,16 +54,25 @@
     }
 
   }
+
+  .options {
+    &.side-by-side {
+      display: none;
+      margin: 0px;
+    }
+  }
+
   .options.side-by-side button {
-    border-left: 0;
+    display: none;
   }
   .options.side-by-side button:first-child {
     border-left: 1px solid @color-blue;
     border-right: 0 !important;
   }
 
+
   .tab {
-    width: 330px;
+    width: 250px;
     display: none;
     height: 310px;
 
