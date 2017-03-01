@@ -1,6 +1,6 @@
 {
   "name": "input-moment-ex",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "description": "React datetime picker powered by momentjs - improvements by Aikar",
   "main": "index.js",
   "scripts": {
