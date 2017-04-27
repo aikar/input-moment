@@ -41,9 +41,11 @@
     "webpack-dev-server": "^1.14.0"
   },
   "dependencies": {
+    "babel-preset-stage-2": "^6.24.1",
     "blacklist": "^1.1.4",
     "classnames": "^2.2.5",
     "lodash": "^4.17.1",
+    "react-autobind": "^1.0.6",
     "react-input-slider": "^1.5.0"
   },
   "repository": {
