@@ -86,3 +86,4 @@ export class InputMoment extends React.Component {
         if (this.props.onSave) this.props.onSave();
     }
 }
+export default InputMoment;

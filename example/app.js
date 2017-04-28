@@ -6,7 +6,7 @@ require('./app.less');
 const moment = require('moment');
 const React = require('react');
 const ReactDOM = require('react-dom');
-const InputMoment = require('../src/input-moment').InputMoment;
+const InputMoment = require('../').InputMoment;
 const packageJson = require('../package.json');
 
 class App extends React.Component {

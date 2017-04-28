@@ -146,12 +146,10 @@ export class Time extends React.Component {
     setHours(e) {
         if (!e || !e.target.value) {
             this.setState({hr: ""});
-            console.log("x");
             return false;
         }
         const m = this.props.moment;
         let number = parseInt(e.target.value, 10);
-        console.log(number);
         if (number < 0 || number > 12) {
             return;
         }
