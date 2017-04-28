@@ -1,9 +1,10 @@
 import autoBind from 'react-autobind';
+import React from "react";
 const cx = require('classnames');
-const React = require('react');
 const InputSlider = require('react-input-slider');
 
 export class Time extends React.Component {
+    static tabIndex = 1;
     constructor(props, ctx) {
         super(props, ctx);
 
@@ -36,12 +37,31 @@ export class Time extends React.Component {
         return (
             <div className={cx('m-time', this.props.className)}>
                 <div className="showtime">
-                    <span className="time"><input onChange={this.setHours} value={this.state.hr}/></span>
+                    <span className="time">
+                        <input
+                            tabIndex={Time.tabIndex++}
+                            onChange={this.setHours}
+                            onKeyDown={this.onKeyHours.bind(this, true)}
+                            onKeyUp={this.onKeyHours.bind(this, false)}
+                            value={this.state.hr}
+                        />
+                    </span>
                     <span className="seperator">:</span>
-                    <span className="time"><input onChange={this.setMinutes} value={this.state.min}/></span>
+                    <span className="time">
+                        <input
+                            tabIndex={Time.tabIndex++}
+                            onChange={this.setMinutes}
+                            onKeyDown={this.onKeyMinutes.bind(this, true)}
+                            onKeyUp={this.onKeyMinutes.bind(this, false)}
+                            value={this.state.min}
+                        />
+                    </span>
                     <span className="seperator"> </span>
                     <span className={cx('ampm')}>
             <span className={cx('am', {'active': this.state.am})}
+                  tabIndex={Time.tabIndex++}
+                  onKeyDown={this.onKeyAMPM.bind(this, true)}
+                  onKeyUp={this.onKeyAMPM.bind(this, false)}
                   onClick={() => this.toggleAM(true)}
             >AM</span>
             <span className={cx('pm', {'active': !this.state.am})}
@@ -80,13 +100,58 @@ export class Time extends React.Component {
         });
     }
 
+    onKeyAMPM(down, e) {
+        const isUp = e.keyCode === 38;
+        const isDown = e.keyCode === 40;
+        if (down && (isUp || isDown)) {
+            this.toggleAM(!this.state.am);
+        }
+        e.preventDefault();
+        return false;
+    }
+
+    onKeyHours(down, e) {
+        const isUp = e.keyCode === 38;
+        const isDown = e.keyCode === 40;
+        if (!isDown && !isUp) {
+            return;
+        }
+        const m = this.props.moment;
+        if (down) {
+            if (isUp) {
+                m.hours(m.hours() + 1);
+            } else if (isDown) {
+                m.hours(m.hours() - 1);
+            }
+            this.props.onTimeChange(m);
+        }
+    }
+    onKeyMinutes(down, e) {
+        const isUp = e.keyCode === 38;
+        const isDown = e.keyCode === 40;
+        if (!isDown && !isUp) {
+            return;
+        }
+        const m = this.props.moment;
+        if (down) {
+            if (isUp) {
+                m.minutes(m.minutes() + 1);
+            } else if (isDown) {
+                m.minutes(m.minutes() - 1);
+            }
+            this.props.onTimeChange(m);
+        }
+    }
+
     setHours(e) {
         if (!e || !e.target.value) {
             this.setState({hr: ""});
+            console.log("x");
             return false;
         }
         const m = this.props.moment;
         let number = parseInt(e.target.value, 10);
+        console.log(number);
         if (number < 0 || number > 12) {
             return;
         }
