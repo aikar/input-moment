@@ -65,6 +65,7 @@ export class InputMoment extends React.Component {
                         onTimeChange={(e) => {
                             this.props.onChange(e);
                         }}
+                        isValid={this.props.isValid}
                     />
                 </div>
 
