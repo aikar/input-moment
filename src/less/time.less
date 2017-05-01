@@ -12,17 +12,19 @@
     color: @color-blue;
 
     > .time {
+      box-sizing: content-box;
       width: 64px;
       > input {
-        height: 48px;
         line-height: 24px;
-        padding: 36px 5px;
+        padding: 0 5px;
 
         border: 0;
         font-size: 32px;
         text-align: center;
         background-color: transparent;
         color: #666;
+        height: 86px;
+        width: 64px;
       }
       text-align: center;
       background-color: transparent;
@@ -43,7 +45,7 @@
         > span {
           
           width: 64px;
-          padding:6px;
+          padding:10px;
           background-color: transparent;
           border: 1px solid @color-gray;
           border-radius: 3px;
