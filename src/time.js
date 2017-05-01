@@ -111,9 +111,13 @@ export class Time extends React.Component {
     }
 
     onKeyHours(down, e) {
-        const isUp = e.keyCode === 38;
-        const isDown = e.keyCode === 40;
+        const code = e.keyCode;
+        const isUp = code === 38;
+        const isDown = code === 40;
         if (!isDown && !isUp) {
+            if (!this.isValidKey(code)) {
+                e.preventDefault();
+            }
             return;
         }
         const m = this.props.moment;
@@ -127,9 +131,13 @@ export class Time extends React.Component {
         }
     }
     onKeyMinutes(down, e) {
-        const isUp = e.keyCode === 38;
-        const isDown = e.keyCode === 40;
+        const code = e.keyCode;
+        const isUp = code === 38;
+        const isDown = code === 40;
         if (!isDown && !isUp) {
+            if (!this.isValidKey(code)) {
+                e.preventDefault();
+            }
             return;
         }
         const m = this.props.moment;
@@ -141,6 +149,18 @@ export class Time extends React.Component {
             }
             this.props.onTimeChange(m);
         }
+    }
+
+    isValidKey(code) {
+        return (code >= 35 && code <= 40)
+            || code === 8
+            || code === 9
+            || code === 27
+            || code === 46
+            || code === 144
+            || (code >= 48 && code <= 57)
+            || (code >= 96 && code <= 105)
+            ;
     }
 
     setHours(e) {
@@ -167,6 +187,7 @@ export class Time extends React.Component {
         if (!e) {
             return;
         }
+
         const m = this.props.moment;
         let number = parseInt(e.target.value, 10);
         if (number < 0 || number > 59) {
