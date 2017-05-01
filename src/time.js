@@ -43,6 +43,8 @@ export class Time extends React.Component {
                             onChange={this.setHours}
                             onKeyDown={this.onKeyHours.bind(this, true)}
                             onKeyUp={this.onKeyHours.bind(this, false)}
+                            onFocus={this.onFocusHours}
+                            onBlur={this.onBlurHours}
                             value={this.state.hr}
                         />
                     </span>
@@ -53,6 +55,8 @@ export class Time extends React.Component {
                             onChange={this.setMinutes}
                             onKeyDown={this.onKeyMinutes.bind(this, true)}
                             onKeyUp={this.onKeyMinutes.bind(this, false)}
+                            onFocus={this.onFocusMinutes}
+                            onBlur={this.onBlurMinutes}
                             value={this.state.min}
                         />
                     </span>
@@ -98,6 +102,29 @@ export class Time extends React.Component {
             hr: props.moment.format('h'),
             min: props.moment.format('mm')
         });
+    }
+    onFocusHours(e) {
+        this.setState({
+            hrprev: this.props.moment.format('H'),
+            amprev: this.state.am
+        });
+    }
+    onFocusMinutes(e) {
+        this.setState({minprev: this.props.moment.format('mm')});
+    }
+    onBlurHours(e) {
+        if (!parseInt(e.target.value)) {
+            const m = this.props.moment;
+            m.hours(this.state.hrprev);
+            this.props.onTimeChange(m);
+        }
+    }
+    onBlurMinutes(e) {
+        if (e.target.value === "") {
+            const m = this.props.moment;
+            m.minutes(this.state.minprev);
+            this.props.onTimeChange(m);
+        }
     }
 
     onKeyAMPM(down, e) {
@@ -184,7 +211,8 @@ export class Time extends React.Component {
     }
 
     setMinutes(e) {
-        if (!e) {
+        if (!e || (e.target.value === "")) {
+            this.setState({min: ""});
             return;
         }
 
