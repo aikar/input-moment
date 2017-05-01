@@ -197,7 +197,7 @@ export class Time extends React.Component {
         }
         const m = this.props.moment;
         let number = parseInt(e.target.value, 10);
-        if (number < 0 || number > 12) {
+        if (isNaN(number) || number < 0 || number > 12) {
             return;
         }
         this.setState({hr: number || ""});
@@ -218,7 +218,7 @@ export class Time extends React.Component {
 
         const m = this.props.moment;
         let number = parseInt(e.target.value, 10);
-        if (number < 0 || number > 59) {
+        if (isNaN(number) || number < 0 || number > 59) {
             return;
         }
         this.setState({min: number || ""});
