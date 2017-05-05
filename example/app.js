@@ -13,7 +13,7 @@ class App extends React.Component {
     constructor(props, ctx) {
         super(props, ctx);
         this.state = {
-            m: moment().add({hours: -13})
+            m: moment().add({hours: 13})
         };
         autoBind(this);
     }
@@ -38,6 +38,12 @@ class App extends React.Component {
                             moment={this.state.m}
                             onChange={this.handleChange}
                             onSave={this.handleSave}
+                            isValid={((date) => {
+                                const valid = moment().startOf('day');
+                                const test = moment(date.startOf('day'));
+                                return test.isSameOrAfter(valid);
+                            })}
+                            />
                         />
                     </div>
                     <div className="example">
@@ -53,7 +59,13 @@ class App extends React.Component {
     }
 
     handleChange(m) {
-        this.setState({m});
+        const now = moment();
+        now.add({minute: 1});
+        if (m.isBefore(now)) {
+            this.setState({m: now});
+        } else {
+            this.setState({m: m});
+        }
     }
 
     handleSave() {
