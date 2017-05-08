@@ -39,8 +39,9 @@ export class Time extends React.Component {
                 <div className="showtime">
                     <span className="time">
                         <input
+                            type="text"
                             tabIndex={Time.tabIndex++}
-                            onChange={this.setHours}
+                            onChange={this.onChangeHours}
                             onKeyDown={this.onKeyHours.bind(this, true)}
                             onKeyUp={this.onKeyHours.bind(this, false)}
                             onFocus={this.onFocusHours}
@@ -51,8 +52,9 @@ export class Time extends React.Component {
                     <span className="seperator">:</span>
                     <span className="time">
                         <input
+                            type="text"
                             tabIndex={Time.tabIndex++}
-                            onChange={this.setMinutes}
+                            onChange={this.onChangeMinutes}
                             onKeyDown={this.onKeyMinutes.bind(this, true)}
                             onKeyUp={this.onKeyMinutes.bind(this, false)}
                             onFocus={this.onFocusMinutes}
@@ -95,12 +97,51 @@ export class Time extends React.Component {
             </div>
         );
     }
+    getValidHours(val) {
+        val = parseInt(val);
+        if (isNaN(val) || val < 1 || val > 12) {
+            return null;
+        }
+        return val;
+    }
+    getValidMins(val) {
+        val = parseInt(val);
+        if (isNaN(val) || val < 0 || val > 59) {
+            return null;
+        }
+        return val;
+    }
+    onChangeHours(e) {
+        if (e.target.value === "") {
+            this.setState({hr: ""});
+            return;
+        }
+        const val = this.getValidHours(e.target.value);
+        if (val === null) {
+            e.preventDefault();
+            return false;
+        }
+        this.setState({hr: val});
+    }
+
+    onChangeMinutes(e) {
+        if (e.target.value === "") {
+            this.setState({min: ""});
+            return;
+        }
+        const val = parseInt(e.target.value);
+        if (val === null) {
+            e.preventDefault();
+            return false;
+        }
+        this.setState({min: val});
+    }
 
     componentWillReceiveProps(props) {
         this.setState({
-            am: props.moment.hour() < 12,
             hr: props.moment.format('h'),
-            min: props.moment.format('mm')
+            min: props.moment.format('mm'),
+            am: props.moment.hour() < 12,
         });
     }
     onFocusHours(e) {
@@ -110,13 +151,18 @@ export class Time extends React.Component {
         });
     }
     onFocusMinutes(e) {
-        this.setState({minprev: this.props.moment.format('mm')});
+        this.setState({
+            minprev: this.props.moment.format('mm'),
+            min: parseInt(this.props.moment.format('m'))
+        });
     }
     onBlurHours(e) {
         if (!parseInt(e.target.value)) {
             const m = this.props.moment;
             m.hours(this.state.hrprev);
             this.props.onTimeChange(m);
+        } else {
+            this.setHours(e);
         }
     }
     onBlurMinutes(e) {
@@ -124,6 +170,8 @@ export class Time extends React.Component {
             const m = this.props.moment;
             m.minutes(this.state.minprev);
             this.props.onTimeChange(m);
+        } else {
+            this.setMinutes(e);
         }
     }
 
@@ -147,13 +195,21 @@ export class Time extends React.Component {
             }
             return;
         }
+
         const m = this.props.moment;
         if (down) {
+            this.onBlurHours(e);
             if (isUp) {
-                m.hours(m.hours() + 1);
+                m.add({hours: 1});
             } else if (isDown) {
-                m.hours(m.hours() - 1);
+                m.add({hours: -1});
             }
+            this.setState({
+                hr: m.format('h'),
+                hrprev: m.format('H'),
+                min: m.format('mm'),
+                am: m.hour() < 12,
+            });
             this.props.onTimeChange(m);
         }
     }
@@ -168,12 +224,20 @@ export class Time extends React.Component {
             return;
         }
         const m = this.props.moment;
+
         if (down) {
+            this.onBlurMinutes(e);
             if (isUp) {
-                m.minutes(m.minutes() + 1);
+                m.add({minutes: 1});
             } else if (isDown) {
-                m.minutes(m.minutes() - 1);
+                m.add({minutes: -1});
             }
+            this.setState({
+                hr: m.format('h'),
+                min: m.format('mm'),
+                minprev: m.format('mm'),
+                am: m.hour() < 12,
+            });
             this.props.onTimeChange(m);
         }
     }
@@ -200,14 +264,20 @@ export class Time extends React.Component {
         if (isNaN(number) || number < 0 || number > 12) {
             return;
         }
-        this.setState({hr: number || ""});
+
+        this.setState({
+            hr: number,
+        });
+
+        if (number === 12) {
+            number = 0;
+        }
         if (!this.state.am) {
             number += 12;
         }
-        if (e.target.value.length) {
-            m.hours(number);
-            this.props.onTimeChange(m);
-        }
+
+        m.hours(number);
+        this.props.onTimeChange(m);
     }
 
     setMinutes(e) {
@@ -221,12 +291,10 @@ export class Time extends React.Component {
         if (isNaN(number) || number < 0 || number > 59) {
             return;
         }
-        this.setState({min: number || ""});
+        this.setState({min: number});
 
-        if (e.target.value.length) {
-            m.minutes(number);
-            this.props.onTimeChange(m);
-        }
+        m.minutes(number);
+        this.props.onTimeChange(m);
     }
     changeHours(pos) {
         const m = this.props.moment;

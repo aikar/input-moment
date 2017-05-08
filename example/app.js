@@ -44,7 +44,6 @@ class App extends React.Component {
                                 return test.isSameOrAfter(valid);
                             })}
                             />
-                        />
                     </div>
                     <div className="example">
                         <InputMoment
