@@ -1,11 +1,11 @@
 {
   "name": "input-moment-ex",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "description": "React datetime picker powered by momentjs - improvements by Aikar",
   "main": "lib/input-moment.js",
   "scripts": {
     "start": "webpack-dev-server -c --port=8888 --host=0.0.0.0",
-    "build-js": "babel src --out-dir lib && NODE_ENV=production webpack -p --env production",
+    "build-js": "babel src --out-dir lib",
     "build-css": "lessc --clean-css src/less/input-moment.less dist/input-moment.css",
     "build": "npm run build-js && npm run build-css",
     "deploy": "npm run build && github-pages-deploy",
