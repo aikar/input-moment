@@ -129,12 +129,12 @@ export class Time extends React.Component {
             this.setState({min: ""});
             return;
         }
-        const val = parseInt(e.target.value);
+        const val = this.getValidMins(e.target.value);
         if (val === null) {
             e.preventDefault();
             return false;
         }
-        this.setState({min: val});
+        this.setState({min: val || e.target.value});
     }
 
     componentWillReceiveProps(props) {
@@ -153,7 +153,7 @@ export class Time extends React.Component {
     onFocusMinutes(e) {
         this.setState({
             minprev: this.props.moment.format('mm'),
-            min: parseInt(this.props.moment.format('m'))
+            min: this.props.moment.format('mm')
         });
     }
     onBlurHours(e) {
@@ -291,7 +291,7 @@ export class Time extends React.Component {
         if (isNaN(number) || number < 0 || number > 59) {
             return;
         }
-        this.setState({min: number});
+        this.setState({min: number || "00"});
 
         m.minutes(number);
         this.props.onTimeChange(m);
