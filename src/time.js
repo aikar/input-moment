@@ -38,6 +38,9 @@ export class Time extends React.Component {
             <div className={cx('m-time', this.props.className)}>
                 <div className="showtime">
                     <span className="time">
+                        <span className="fa fa-fw fa-caret-up hr-up"
+                              onClick={() => this.adjustTime({hours: 1})}
+                        />
                         <input
                             type="text"
                             tabIndex={Time.tabIndex++}
@@ -48,9 +51,15 @@ export class Time extends React.Component {
                             onBlur={this.onBlurHours}
                             value={this.state.hr}
                         />
+                        <span className="fa fa-fw fa-caret-down hr-down"
+                              onClick={() => this.adjustTime({hours: -1})}
+                        />
                     </span>
                     <span className="seperator">:</span>
                     <span className="time">
+                        <span className="fa fa-fw fa-caret-up min-up"
+                              onClick={() => this.adjustTime({minutes: 1})}
+                              />
                         <input
                             type="text"
                             tabIndex={Time.tabIndex++}
@@ -60,6 +69,9 @@ export class Time extends React.Component {
                             onFocus={this.onFocusMinutes}
                             onBlur={this.onBlurMinutes}
                             value={this.state.min}
+                        />
+                        <span className="fa fa-fw fa-caret-down min-down"
+                              onClick={() => this.adjustTime({minutes: -1})}
                         />
                     </span>
                     <span className="seperator"> </span>
@@ -196,22 +208,28 @@ export class Time extends React.Component {
             return;
         }
 
-        const m = this.props.moment;
+
         if (down) {
             this.onBlurHours(e);
             if (isUp) {
-                m.add({hours: 1});
-            } else if (isDown) {
-                m.add({hours: -1});
+                this.adjustTime({hours: 1});
+            } else {
+                this.adjustTime({hours: -1});
             }
-            this.setState({
-                hr: m.format('h'),
-                hrprev: m.format('H'),
-                min: m.format('mm'),
-                am: m.hour() < 12,
-            });
-            this.props.onTimeChange(m);
         }
+    }
+
+    adjustTime(adjust) {
+        const m = this.props.moment;
+        m.add(adjust);
+        this.setState({
+            hr: m.format('h'),
+            hrprev: m.format('H'),
+            minprev: m.format('mm'),
+            min: m.format('mm'),
+            am: m.hour() < 12,
+        });
+        this.props.onTimeChange(m);
     }
     onKeyMinutes(down, e) {
         const code = e.keyCode;
@@ -223,22 +241,14 @@ export class Time extends React.Component {
             }
             return;
         }
-        const m = this.props.moment;
 
         if (down) {
             this.onBlurMinutes(e);
             if (isUp) {
-                m.add({minutes: 1});
-            } else if (isDown) {
-                m.add({minutes: -1});
+                this.adjustTime({minutes: 1});
+            } else {
+                this.adjustTime({minutes: -1});
             }
-            this.setState({
-                hr: m.format('h'),
-                min: m.format('mm'),
-                minprev: m.format('mm'),
-                am: m.hour() < 12,
-            });
-            this.props.onTimeChange(m);
         }
     }
 

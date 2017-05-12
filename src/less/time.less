@@ -12,8 +12,27 @@
     color: @color-blue;
 
     > .time {
+      position: relative;
       box-sizing: content-box;
       width: 64px;
+      .fa-caret-down, .fa-caret-up {
+        position: absolute;
+        font-size: 20px;
+        cursor: pointer;
+        &:hover {
+          color: #222;
+        }
+      }
+      .fa-caret-up {
+        top: 2px;
+        left: 50%;
+        transform: translate(-50%, 0);
+      }
+      .fa-caret-down {
+        bottom: 2px;
+        left: 50%;
+        transform: translate(-50%, 0);
+      }
       > input {
         line-height: 24px;
         padding: 0 5px;
